@@ -1,5 +1,5 @@
 ---
-tittel: Potetmos 2 test
+tittel: Potetmos 2 test bare for å teste en rett med veldig langt navn
 kategori: Middag
 porsjoner: 4
 tid: 30 min
