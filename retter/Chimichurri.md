@@ -3,7 +3,7 @@ tittel: Chimichurri
 kategori: Tilbehør & Sauser
 porsjoner: 4
 tid:
-bilde:
+bilde: chimichurri.jpg
 ---
 
 ## Ingredienser
