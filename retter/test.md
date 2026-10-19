@@ -1,7 +1,7 @@
 ---
 tittel: Test
 kategori: Middag
-bilde: test.jpg
+bilde: TEST.jpg
 ---
 
 ## Ingredienser
