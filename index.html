@@ -1,31 +1,241 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Oppskriftboken min</title>
-  <style>
-    body { font-family: Georgia, serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
-    h1 { border-bottom: 2px solid #c0392b; padding-bottom: .3rem; }
-    .oppskrift { margin: 2rem 0; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oppskrifter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6f2; --ink:#14221b; --muted:#5b6a62; --accent:#1d6b57;
+  --tint:#dcebe3; --line:#cfdad3;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#101a15; --ink:#e9f1ec; --muted:#93a59b; --accent:#5fc3a5; --tint:#1c3128; --line:#263a31;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:var(--accent)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* Forside */
+header{text-align:center;padding:4rem 1rem 1.5rem}
+h1.logo{margin:0;font-size:clamp(3rem,11vw,6.5rem);font-weight:800;letter-spacing:-.04em;line-height:1}
+h1.logo a{color:inherit;text-decoration:none}
+nav{display:flex;gap:.5rem;overflow-x:auto;padding:1rem;max-width:1100px;margin:0 auto;justify-content:safe center;scrollbar-width:thin}
+nav button{flex:0 0 auto;font:inherit;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+nav button:hover{background:var(--tint);border-color:var(--accent)}
+nav button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+main{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
+#kategoriTittel{font-size:1.1rem;font-weight:600;color:var(--muted);margin:0 0 1rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--line)}
+#liste{list-style:none;margin:0;padding:0;column-count:3;column-gap:2.5rem}
+#liste li{break-inside:avoid}
+#liste a{display:block;font-size:1.1rem;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding:.6rem .25rem;transition:color .15s,padding-left .15s}
+#liste a:hover{color:var(--accent);padding-left:.6rem}
+.tom{color:var(--muted)}
+@media (max-width:820px){#liste{column-count:2}}
+@media (max-width:520px){#liste{column-count:1}}
+
+/* Oppskrift */
+#oppskrift{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
+.tilbake{display:inline-block;margin-bottom:1.5rem;font-weight:600;text-decoration:none}
+.tilbake:hover{text-decoration:underline}
+.topp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:2.5rem;align-items:start}
+.topp.utenBilde{grid-template-columns:minmax(0,1fr)}
+#oTittel{margin:0;font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+#oKat{margin:.4rem 0 0;color:var(--muted)}
+#oppskrift h2{font-size:1.15rem;margin:1.75rem 0 .5rem;padding-bottom:.4rem;border-bottom:1.5px solid var(--line)}
+#oppskrift ul,#oppskrift ol{padding-left:1.3rem;margin:.5rem 0}
+#oppskrift li{margin:.35rem 0}
+#oBilde{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:14px;background:var(--tint)}
+.fram{column-count:2;column-gap:3rem}
+.fram li,.fram p{break-inside:avoid}
+.fram>:first-child{margin-top:0}
+@media (max-width:760px){.topp{grid-template-columns:1fr}.fram{column-count:1}#oBilde{order:-1}}
+@media print{nav,.tilbake{display:none}}
+</style>
 </head>
 <body>
-  <h1>Oppskriftboken min</h1>
 
-  <div class="oppskrift">
-    <h2>Pannekaker</h2>
-    <h3>Ingredienser</h3>
-    <ul>
-      <li>3 egg</li>
-      <li>5 dl melk</li>
-      <li>250 g mel</li>
-    </ul>
-    <h3>Fremgangsmåte</h3>
-    <ol>
-      <li>Visp sammen alt til en jevn røre.</li>
-      <li>Stek tynne pannekaker i smør.</li>
-    </ol>
+<div id="forside">
+  <header><h1 class="logo"><a href="#">Oppskrifter</a></h1></header>
+  <nav id="meny" aria-label="Kategorier"></nav>
+  <main>
+    <h2 id="kategoriTittel"></h2>
+    <ul id="liste"></ul>
+  </main>
+</div>
+
+<article id="oppskrift" hidden>
+  <a class="tilbake" id="tilbake" href="#">&larr; Tilbake</a>
+  <div class="topp" id="topp">
+    <div>
+      <h1 id="oTittel"></h1>
+      <p id="oKat"></p>
+      <h2>Ingredienser</h2>
+      <div id="oIng"></div>
+    </div>
+    <img id="oBilde" alt="">
   </div>
+  <h2>Fremgangsmåte</h2>
+  <div class="fram" id="oFram"></div>
+  <div id="oAnnet"></div>
+</article>
+
+<script>
+/* ============================================================
+   INNSTILLINGER (endres normalt aldri)
+   Oppskriftene ligger som .md-filer i mappen "retter".
+   Kategorier må skrives likt her og i oppskriftsfilene.
+   ============================================================ */
+const BRUKER = "kattlauv";
+const REPO = "oppskrifter";
+const MAPPE = "retter";
+const KATEGORIER = [
+  "Frokost & Brunsj",
+  "Lunsj & Matpakke",
+  "Middag",
+  "Snacks & Smårett",
+  "Dessert & Bakst",
+  "Tilbehør & Sauser"
+];
+
+let ALLE = [];
+let lastet = false;
+let feil = "";
+let valgt = KATEGORIER[0];
+
+const $ = id => document.getElementById(id);
+
+/* ---------- Les .md-fil: toppdata + innhold ---------- */
+function lesMd(tekst) {
+  tekst = tekst.replace(/\r/g, "");
+  const m = tekst.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  const meta = {};
+  let body = tekst;
+  if (m) {
+    m[1].split("\n").forEach(l => {
+      const i = l.indexOf(":");
+      if (i > 0) meta[l.slice(0, i).trim().toLowerCase()] = l.slice(i + 1).trim();
+    });
+    body = m[2];
+  }
+  return { meta, body };
+}
+
+function delOpp(body) {
+  const ut = { ing: "", fram: "", annet: "" };
+  body.split(/^## +/m).forEach((blokk, i) => {
+    if (i === 0) { ut.annet += blokk; return; }
+    const nl = blokk.indexOf("\n");
+    const overskrift = (nl < 0 ? blokk : blokk.slice(0, nl)).trim();
+    const innhold = nl < 0 ? "" : blokk.slice(nl + 1);
+    if (/ingrediens/i.test(overskrift)) ut.ing += innhold;
+    else if (/fremgang/i.test(overskrift)) ut.fram += innhold;
+    else ut.annet += "\n## " + blokk;
+  });
+  return ut;
+}
+
+/* ---------- Hent alle oppskrifter ---------- */
+async function hentAlle() {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${BRUKER}/${REPO}/contents/${MAPPE}`);
+    if (!r.ok) throw new Error("Fikk feilkode " + r.status + " fra GitHub.");
+    const filer = (await r.json()).filter(f => /\.md$/i.test(f.name) && !f.name.startsWith("_"));
+    const svar = await Promise.all(filer.map(async f => {
+      try {
+        const res = await fetch(MAPPE + "/" + encodeURIComponent(f.name));
+        if (!res.ok) return null;
+        const { meta, body } = lesMd(await res.text());
+        const slug = f.name.replace(/\.md$/i, "");
+        return { slug, tittel: meta.tittel || slug, kategori: meta.kategori || "", bilde: meta.bilde || "", ...delOpp(body) };
+      } catch (e) { return null; }
+    }));
+    ALLE = svar.filter(Boolean);
+  } catch (e) {
+    feil = e.message || "Ukjent feil.";
+  }
+  lastet = true;
+  rute();
+}
+
+/* ---------- Visning ---------- */
+function lagMeny() {
+  $("meny").textContent = "";
+  KATEGORIER.forEach(k => {
+    const b = document.createElement("button");
+    b.textContent = k;
+    b.setAttribute("aria-pressed", k === valgt);
+    b.onclick = () => { location.hash = "k/" + encodeURIComponent(k); };
+    $("meny").appendChild(b);
+  });
+}
+
+function visOversikt() {
+  $("oppskrift").hidden = true;
+  $("forside").hidden = false;
+  document.title = "Oppskrifter";
+  lagMeny();
+  const liste = $("liste");
+  liste.textContent = "";
+  const treff = ALLE.filter(o => o.kategori === valgt).sort((a, b) => a.tittel.localeCompare(b.tittel, "nb"));
+  $("kategoriTittel").textContent = valgt + (lastet && !feil ? " (" + treff.length + ")" : "");
+  const melding = t => { const li = document.createElement("li"); li.className = "tom"; li.textContent = t; liste.appendChild(li); };
+  if (!lastet) return melding("Henter oppskrifter …");
+  if (feil) return melding("Kunne ikke hente oppskriftene. " + feil + " Prøv igjen om litt.");
+  if (!treff.length) return melding("Ingen oppskrifter her ennå.");
+  treff.forEach(o => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.textContent = o.tittel;
+    a.href = "#o/" + encodeURIComponent(o.slug);
+    li.appendChild(a);
+    liste.appendChild(li);
+  });
+}
+
+function visOppskrift(slug) {
+  const o = ALLE.find(x => x.slug === slug);
+  if (!o) { location.hash = ""; return; }
+  $("forside").hidden = true;
+  $("oppskrift").hidden = false;
+  document.title = o.tittel + " – Oppskrifter";
+  $("tilbake").href = "#k/" + encodeURIComponent(o.kategori || KATEGORIER[0]);
+  $("oTittel").textContent = o.tittel;
+  $("oKat").textContent = o.kategori;
+  $("oIng").innerHTML = marked.parse(o.ing);
+  $("oFram").innerHTML = marked.parse(o.fram);
+  $("oAnnet").innerHTML = marked.parse(o.annet);
+  const img = $("oBilde");
+  const topp = $("topp");
+  if (o.bilde) {
+    img.src = /^https?:/i.test(o.bilde) ? o.bilde : MAPPE + "/" + encodeURI(o.bilde);
+    img.alt = o.tittel;
+    img.hidden = false;
+    topp.classList.remove("utenBilde");
+    img.onerror = () => { img.hidden = true; topp.classList.add("utenBilde"); };
+  } else {
+    img.hidden = true;
+    topp.classList.add("utenBilde");
+  }
+  window.scrollTo(0, 0);
+}
+
+function rute() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith("o/") && lastet) return visOppskrift(h.slice(2));
+  if (h.startsWith("k/") && KATEGORIER.includes(h.slice(2))) valgt = h.slice(2);
+  visOversikt();
+}
+
+window.addEventListener("hashchange", rute);
+rute();
+hentAlle();
+</script>
 </body>
 </html>
