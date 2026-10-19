@@ -1,6 +1,8 @@
 ---
 tittel: Pannekaker
 kategori: Frokost & Brunsj
+porsjoner: 4
+tid: 30 min
 ---
 
 ## Ingredienser
