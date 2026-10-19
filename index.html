@@ -53,7 +53,7 @@ main{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
 .topp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:2.5rem;align-items:start}
 .topp.utenBilde{grid-template-columns:minmax(0,1fr)}
 #oTittel{margin:0;font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.1}
-#oKat{margin:.4rem 0 0;color:var(--muted)}
+#oKat{margin:.4rem 0 0;color:var(--muted);white-space:pre-line}
 #oppskrift h2{font-size:1.15rem;margin:1.75rem 0 .5rem;padding-bottom:.4rem;border-bottom:1.5px solid var(--line)}
 #oppskrift ul,#oppskrift ol{padding-left:1.3rem;margin:.5rem 0}
 #oppskrift li{margin:.35rem 0}
@@ -164,7 +164,7 @@ async function hentAlle() {
         if (!res.ok) return null;
         const { meta, body } = lesMd(await res.text());
         const slug = f.name.replace(/\.md$/i, "");
-        return { slug, tittel: meta.tittel || slug, kategori: meta.kategori || "", bilde: meta.bilde || "", ...delOpp(body) };
+        return { slug, tittel: meta.tittel || slug, kategori: meta.kategori || "", bilde: meta.bilde || "", porsjoner: meta.porsjoner || "", tid: meta.tid || "", ...delOpp(body) };
       } catch (e) { return null; }
     }));
     ALLE = svar.filter(Boolean);
@@ -228,7 +228,7 @@ function visOppskrift(slug) {
   document.title = o.tittel + " – Oppskrifter";
   $("tilbake").href = "#k/" + encodeURIComponent(o.kategori || KATEGORIER[0]);
   $("oTittel").textContent = o.tittel;
-  $("oKat").textContent = o.kategori;
+  $("oKat").textContent = [o.kategori, o.porsjoner && "Porsjoner: " + o.porsjoner, o.tid && "Tid: " + o.tid].filter(Boolean).join("\n");
   $("oIng").innerHTML = marked.parse(o.ing);
   $("oFram").innerHTML = marked.parse(o.fram);
   const steg = $("oFram").querySelectorAll(":scope > ol > li, :scope > ul > li");
