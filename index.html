@@ -30,6 +30,12 @@ nav{display:flex;gap:.5rem;overflow-x:auto;padding:1rem;max-width:1100px;margin:
 nav button{flex:0 0 auto;font:inherit;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
 nav button:hover{background:var(--tint);border-color:var(--accent)}
 nav button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.sok{max-width:520px;margin:0 auto;padding:0 1rem}
+.sok input{width:100%;font:inherit;font-size:1.05rem;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:.7rem 1.3rem;transition:border-color .15s,background .15s}
+.sok input::placeholder{color:var(--muted)}
+.sok input:hover{border-color:var(--accent)}
+.sok input:focus{outline:none;border-color:var(--accent);background:var(--tint)}
+#liste .kat{display:block;font-size:.85rem;color:var(--muted)}
 main{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
 #kategoriTittel{font-size:1.1rem;font-weight:600;color:var(--muted);margin:0 0 1rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--line)}
 #liste{list-style:none;margin:0;padding:0;column-count:3;column-gap:2.5rem}
@@ -63,6 +69,7 @@ main{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
 
 <div id="forside">
   <header><h1 class="logo"><a href="#">Oppskrifter</a></h1></header>
+  <div class="sok"><input type="search" id="sok" placeholder="Søk etter oppskrift eller ingrediens" aria-label="Søk i oppskriftene" autocomplete="off"></div>
   <nav id="meny" aria-label="Kategorier"></nav>
   <main>
     <h2 id="kategoriTittel"></h2>
@@ -108,6 +115,7 @@ let ALLE = [];
 let lastet = false;
 let feil = "";
 let valgt = KATEGORIER[0];
+let sok = "";
 
 const $ = id => document.getElementById(id);
 
@@ -170,8 +178,8 @@ function lagMeny() {
   KATEGORIER.forEach(k => {
     const b = document.createElement("button");
     b.textContent = k;
-    b.setAttribute("aria-pressed", k === valgt);
-    b.onclick = () => { location.hash = "k/" + encodeURIComponent(k); };
+    b.setAttribute("aria-pressed", !sok && k === valgt);
+    b.onclick = () => { sok = ""; $("sok").value = ""; location.hash = "k/" + encodeURIComponent(k); visOversikt(); };
     $("meny").appendChild(b);
   });
 }
@@ -183,17 +191,27 @@ function visOversikt() {
   lagMeny();
   const liste = $("liste");
   liste.textContent = "";
-  const treff = ALLE.filter(o => o.kategori === valgt).sort((a, b) => a.tittel.localeCompare(b.tittel, "nb"));
-  $("kategoriTittel").textContent = valgt + (lastet && !feil ? " (" + treff.length + ")" : "");
+  const q = sok.trim().toLowerCase();
+  const treff = ALLE
+    .filter(o => q ? (o.tittel + " " + o.ing).toLowerCase().includes(q) : o.kategori === valgt)
+    .sort((a, b) => a.tittel.localeCompare(b.tittel, "nb"));
+  const navn = q ? "Søkeresultater for «" + sok.trim() + "»" : valgt;
+  $("kategoriTittel").textContent = navn + (lastet && !feil ? " (" + treff.length + ")" : "");
   const melding = t => { const li = document.createElement("li"); li.className = "tom"; li.textContent = t; liste.appendChild(li); };
   if (!lastet) return melding("Henter oppskrifter …");
   if (feil) return melding("Kunne ikke hente oppskriftene. " + feil + " Prøv igjen om litt.");
-  if (!treff.length) return melding("Ingen oppskrifter her ennå.");
+  if (!treff.length) return melding(q ? "Ingen treff. Prøv et annet ord." : "Ingen oppskrifter her ennå.");
   treff.forEach(o => {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.textContent = o.tittel;
     a.href = "#o/" + encodeURIComponent(o.slug);
+    if (q && o.kategori) {
+      const k = document.createElement("span");
+      k.className = "kat";
+      k.textContent = o.kategori;
+      a.appendChild(k);
+    }
     li.appendChild(a);
     liste.appendChild(li);
   });
@@ -228,11 +246,13 @@ function visOppskrift(slug) {
 
 function rute() {
   const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) { sok = ""; $("sok").value = ""; }
   if (h.startsWith("o/") && lastet) return visOppskrift(h.slice(2));
   if (h.startsWith("k/") && KATEGORIER.includes(h.slice(2))) valgt = h.slice(2);
   visOversikt();
 }
 
+$("sok").addEventListener("input", e => { sok = e.target.value; visOversikt(); });
 window.addEventListener("hashchange", rute);
 rute();
 hentAlle();
