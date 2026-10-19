@@ -2,7 +2,7 @@
 tittel: Chimichurri 
 kategori: Tilbehør & Sauser
 porsjoner: 4
-tid: 20 min
+tid: 
 bilde: chimichurri.jpg
 ---
 
