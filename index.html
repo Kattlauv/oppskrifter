@@ -154,15 +154,17 @@ function delOpp(body) {
 /* ---------- Hent alle oppskrifter ---------- */
 async function hentAlle() {
   try {
-    const r = await fetch(`https://api.github.com/repos/${BRUKER}/${REPO}/contents/${MAPPE}`);
+    const r = await fetch(`https://api.github.com/repos/${BRUKER}/${REPO}/git/trees/main?recursive=1`);
     if (!r.ok) throw new Error("Fikk feilkode " + r.status + " fra GitHub.");
-    const filer = (await r.json()).filter(f => /\.md$/i.test(f.name) && !f.name.startsWith("_"));
+    const filer = (await r.json()).tree.filter(f =>
+      f.type === "blob" && f.path.startsWith(MAPPE + "/") && /\.md$/i.test(f.path) &&
+      !f.path.split("/").some(del => del.startsWith("_")));
     const svar = await Promise.all(filer.map(async f => {
       try {
-        const res = await fetch(MAPPE + "/" + encodeURIComponent(f.name));
+        const res = await fetch(f.path.split("/").map(encodeURIComponent).join("/"));
         if (!res.ok) return null;
         const { meta, body } = lesMd(await res.text());
-        const slug = f.name.replace(/\.md$/i, "");
+        const slug = f.path.slice(MAPPE.length + 1).replace(/\.md$/i, "");
         return { slug, tittel: meta.tittel || slug, kategori: (meta.kategori || "").replace(/^(Frokost & Brunsj|Lunsj & Matpakke)$/i, "Frokost & Lunsj").replace(/^Snacks & Smårett$/i, "Snacks & Småretter"), bilde: meta.bilde || "", porsjoner: meta.porsjoner || "", tid: meta.tid || "", ...delOpp(body) };
       } catch (e) { return null; }
     }));
@@ -236,11 +238,17 @@ function visOppskrift(slug) {
   const img = $("oBilde");
   const topp = $("topp");
   if (o.bilde) {
-    img.src = /^https?:/i.test(o.bilde) ? o.bilde : MAPPE + "/" + encodeURI(o.bilde);
+    const kandidater = /^https?:/i.test(o.bilde) ? [o.bilde] : ["bilder/" + encodeURI(o.bilde), MAPPE + "/" + encodeURI(o.bilde)];
+    let n = 0;
     img.alt = o.tittel;
     img.hidden = false;
     topp.classList.remove("utenBilde");
-    img.onerror = () => { img.hidden = true; topp.classList.add("utenBilde"); };
+    img.onerror = () => {
+      if (++n < kandidater.length) { img.src = kandidater[n]; return; }
+      img.hidden = true;
+      topp.classList.add("utenBilde");
+    };
+    img.src = kandidater[0];
   } else {
     img.hidden = true;
     topp.classList.add("utenBilde");
