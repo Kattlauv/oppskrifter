@@ -106,12 +106,11 @@ const BRUKER = "kattlauv";
 const REPO = "oppskrifter";
 const MAPPE = "retter";
 const KATEGORIER = [
-  "Frokost & Brunsj",
-  "Lunsj & Matpakke",
+  "Frokost & Lunsj",
   "Middag",
-  "Snacks & Smårett",
-  "Dessert & Bakst",
-  "Tilbehør & Sauser"
+  "Snacks & Småretter",
+  "Tilbehør & Sauser",
+  "Dessert & Bakst"
 ];
 
 let ALLE = [];
@@ -164,7 +163,7 @@ async function hentAlle() {
         if (!res.ok) return null;
         const { meta, body } = lesMd(await res.text());
         const slug = f.name.replace(/\.md$/i, "");
-        return { slug, tittel: meta.tittel || slug, kategori: meta.kategori || "", bilde: meta.bilde || "", porsjoner: meta.porsjoner || "", tid: meta.tid || "", ...delOpp(body) };
+        return { slug, tittel: meta.tittel || slug, kategori: (meta.kategori || "").replace(/^(Frokost & Brunsj|Lunsj & Matpakke)$/i, "Frokost & Lunsj").replace(/^Snacks & Smårett$/i, "Snacks & Småretter"), bilde: meta.bilde || "", porsjoner: meta.porsjoner || "", tid: meta.tid || "", ...delOpp(body) };
       } catch (e) { return null; }
     }));
     ALLE = svar.filter(Boolean);
