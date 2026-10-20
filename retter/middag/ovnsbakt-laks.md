@@ -3,6 +3,7 @@ tittel: Ovnsbakt laks
 kategori: Middag
 porsjoner: 4
 tid: 30 min
+bilde: ovnsbakt-laks.jpg
 ---
 
 ## Ingredienser

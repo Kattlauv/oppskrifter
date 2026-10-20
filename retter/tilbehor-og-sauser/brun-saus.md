@@ -3,6 +3,7 @@ tittel: Brun saus
 kategori: Tilbehør & Sauser
 porsjoner: 4
 tid: 20 min
+bilde: brun-saus.jpg
 ---
 
 ## Ingredienser

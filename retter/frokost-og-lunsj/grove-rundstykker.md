@@ -3,6 +3,7 @@ tittel: Grove rundstykker
 kategori: Frokost & Lunsj
 porsjoner: 12
 tid: 1 t 30 min
+bilde: grove-rundstykker.jpg
 ---
 
 ## Ingredienser

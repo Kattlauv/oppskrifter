@@ -3,6 +3,7 @@ tittel: Fylte egg
 kategori: Snacks & Småretter
 porsjoner: 6
 tid: 25 min
+bilde: fylte-egg.jpg
 ---
 
 ## Ingredienser

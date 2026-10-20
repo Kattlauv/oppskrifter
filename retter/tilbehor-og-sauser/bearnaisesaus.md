@@ -3,6 +3,7 @@ tittel: Bearnaisesaus
 kategori: Tilbehør & Sauser
 porsjoner: 4
 tid: 30 min
+bilde: bearnaisesaus.jpg
 ---
 
 ## Ingredienser

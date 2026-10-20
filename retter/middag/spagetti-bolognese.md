@@ -3,6 +3,7 @@ tittel: Spagetti bolognese
 kategori: Middag
 porsjoner: 4
 tid: 45 min
+bilde: spagetti-bolognese.jpg
 ---
 
 ## Ingredienser

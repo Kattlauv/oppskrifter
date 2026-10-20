@@ -3,6 +3,7 @@ tittel: Tzatziki
 kategori: Tilbehør & Sauser
 porsjoner: 4
 tid: 10 min
+bilde: tzatziki.jpg
 ---
 
 ## Ingredienser

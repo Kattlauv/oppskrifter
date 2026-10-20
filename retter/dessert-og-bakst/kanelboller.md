@@ -3,6 +3,7 @@ tittel: Kanelboller
 kategori: Dessert & Bakst
 porsjoner: 20
 tid: 2 timer
+bilde: kanelboller.jpg
 ---
 
 ## Ingredienser

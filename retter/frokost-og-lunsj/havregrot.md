@@ -3,6 +3,7 @@ tittel: Havregrøt
 kategori: Frokost & Lunsj
 porsjoner: 2
 tid: 10 min
+bilde: havregrot.jpg
 ---
 
 ## Ingredienser

@@ -3,6 +3,7 @@ tittel: Tunfisksalat
 kategori: Frokost & Lunsj
 porsjoner: 4
 tid: 10 min
+bilde: tunfisksalat.jpg
 ---
 
 ## Ingredienser

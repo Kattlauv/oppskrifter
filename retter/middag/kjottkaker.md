@@ -3,6 +3,7 @@ tittel: Kjøttkaker
 kategori: Middag
 porsjoner: 4
 tid: 45 min
+bilde: kjottkaker.jpg
 ---
 
 ## Ingredienser

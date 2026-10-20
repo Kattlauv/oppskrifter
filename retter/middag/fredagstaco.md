@@ -3,6 +3,7 @@ tittel: Fredagstaco
 kategori: Middag
 porsjoner: 4
 tid: 30 min
+bilde: fredagstaco.jpg
 ---
 
 ## Ingredienser

@@ -3,6 +3,7 @@ tittel: Eggerøre
 kategori: Frokost & Lunsj
 porsjoner: 2
 tid: 10 min
+bilde: eggerore.jpg
 ---
 
 ## Ingredienser

@@ -3,6 +3,7 @@ tittel: Bruschetta
 kategori: Snacks & Småretter
 porsjoner: 4
 tid: 15 min
+bilde: bruschetta.jpg
 ---
 
 ## Ingredienser

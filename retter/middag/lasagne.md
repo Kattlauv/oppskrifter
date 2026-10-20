@@ -3,6 +3,7 @@ tittel: Lasagne
 kategori: Middag
 porsjoner: 6
 tid: 1 t 15 min
+bilde: lasagne.jpg
 ---
 
 ## Ingredienser

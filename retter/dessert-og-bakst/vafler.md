@@ -3,6 +3,7 @@ tittel: Vafler
 kategori: Dessert & Bakst
 porsjoner: 4
 tid: 30 min
+bilde: vafler.jpg
 ---
 
 ## Ingredienser

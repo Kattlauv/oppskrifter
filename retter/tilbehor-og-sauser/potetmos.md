@@ -3,6 +3,7 @@ tittel: Potetmos
 kategori: Tilbehør & Sauser
 porsjoner: 4
 tid: 30 min
+bilde: potetmos.jpg
 ---
 
 ## Ingredienser

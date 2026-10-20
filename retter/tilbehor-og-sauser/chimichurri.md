@@ -1,28 +1,25 @@
 ---
-tittel: Chimichurri 
+tittel: Chimichurri
 kategori: Tilbehør & Sauser
 porsjoner: 4
-tid: 
+tid: 10 min
 bilde: chimichurri.jpg
 ---
 
 ## Ingredienser
-- 1 bunte (ca. 1–2 dl) fresh bladpersille (finhakket)
-- 3–4 fedd hvitløk (finhakket)
-- 1/2 dl (ca. 3–4 ss) god rødvinseddik
-- 1 1/2 dl ekstra virgin olivenolje
-- 1/2–1 rød chili (finhakket, uten frø) eller 1 ts chiliflak
-- 3/4 ts tørket oregano (eller 1 ss frisk oregano)
-- 1 ts flaksalt / grovt salt
-- 1/2 ts kvernet sort pepper
+- 1 stor neve flatbladpersille (ca. 2 dl hakket)
+- 3 fedd hvitløk
+- 1 ts tørket oregano
+- 1/2 dl rødvinseddik
+- 1,5 dl olivenolje
+- 1/2 ts chiliflak
+- 1/2 ts salt
 
 ## Fremgangsmåte
-1. Finhakk urter og aromater: Finhakk bladpersille, hvitløk og chili med en skarp kniv.
-2. Bland det tørre og syren: Ha persille, hvitløk, chili, oregano, salt og pepper i en bolle. Hell over rødvinseddik og rør sammen.
-3. Tilsett oljen: Hell olivenoljen over blandingen og rør forsiktig.
-4. La den hvile (viktigst!): La sausen stå i romtemperatur i minst 20–30 minutter (helst 1–2 timer) før servering. Dette gjør at smakene setter seg og olivenoljen trekker til seg aromaene fra hvitløk og urter.
-5. 
+1. Hakk persille og hvitløk veldig fint.
+2. Bland dem i en bolle med oregano, chiliflak og salt.
+3. Rør inn eddik og olivenolje.
+4. La sausen trekke i minst 30 minutter før servering.
 
 ## Tips
-- Ingrediensene skal finhakkes med kniv, ikke kjøres i blender/foodprocessor (da blir det en puré eller pesto).
-- Sett sausen aldri i kjøleskapet rett før servering hvis du skal bruke den samme dag, da stivner olivenoljen og smakene dempes.
+Passer godt til grillet kjøtt og fisk.

@@ -3,6 +3,7 @@ tittel: Eplekake
 kategori: Dessert & Bakst
 porsjoner: 8
 tid: 1 time
+bilde: eplekake.jpg
 ---
 
 ## Ingredienser

@@ -3,6 +3,7 @@ tittel: Pannekaker
 kategori: Frokost & Lunsj
 porsjoner: 4
 tid: 30 min
+bilde: pannekaker.jpg
 ---
 
 ## Ingredienser

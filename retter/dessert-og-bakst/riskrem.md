@@ -3,6 +3,7 @@ tittel: Riskrem
 kategori: Dessert & Bakst
 porsjoner: 6
 tid: 1 time + avkjøling
+bilde: riskrem.jpg
 ---
 
 ## Ingredienser
